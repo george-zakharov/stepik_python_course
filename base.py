@@ -1,4 +1,4 @@
-from urllib.request import urlopen, urlretrieve
+from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
 resp = urlopen('https://stepik.org/media/attachments/lesson/245130/6.html')  # скачиваем файл
