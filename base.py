@@ -1,11 +1,13 @@
-from urllib.request import urlopen
-from collections import Counter
-import re
+from urllib.request import urlopen, urlretrieve
+from bs4 import BeautifulSoup
 
-response = urlopen('https://stepik.org/media/attachments/lesson/209719/2.html').read().decode('utf-8')
-text_data = str(response)
-
-regex = '<code>(.*?)</code>'
-sorted_code_data = sorted(re.findall(regex, text_data))
-# Show the most popular matches
-print(Counter(sorted_code_data))
+resp = urlopen('https://stepik.org/media/attachments/lesson/245130/6.html')  # скачиваем файл
+html = resp.read().decode('utf8')  # считываем содержимое
+soup = BeautifulSoup(html, 'html.parser')  # делаем суп
+table = soup.find('table', attrs={'class': 'wikitable sortable'})
+cnt = 0
+for tr in soup.find_all('tr'):
+    cnt += 1
+    for td in tr.find_all(['td', 'th']):
+        cnt *= 2
+print(cnt)
